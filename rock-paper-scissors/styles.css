@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana;
+    color: #000000;
+    /* border: 1px solid red; */
+}
+
+.header {
+    display: flex;
+    gap: 1px;
+}
+.header>div{
+    display: flex;
+    font-size: 10px;
+}
+.header img {
+    width: 60px;
+    border-radius: 50%;
+}
+
+#score-board {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.score-show{
+    display: flex;
+    gap: 150px;
+}
+#main-game {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+}
+#main-game img{
+    width: 100px;
+}
+
+.player-side {
+    transform-origin: left; 
+    animation: humanShake 0.3s ease-in-out infinite;
+}
+
+.computer-side {
+    transform-origin: left; 
+    animation: computerShake 0.3s ease-in-out infinite; 
+}
+
+#player-select{
+   display: none;
+   /* justify-content: center;
+   padding-top: 20px; */
+}
+
+.hands-container {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.hands-container img{
+    transform: rotate(-100deg);
+    width: 100px;
+    height: 100px;
+    clip-path: polygon(30% 20%, 100% 0%, 100% 80%, 20% 68%);
+}
+
+.hands-container div:hover {
+    background-color: aquamarine;
+    cursor: pointer;
+}
+@keyframes humanShake {
+    0% {
+        transform: translateY(10px);
+    }
+    25% {
+        transform: rotate(10deg);
+    }
+    50% {
+        transform: rotate(0deg);
+    }
+    75% {
+        transform: rotate(-10deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes computerShake {
+    0% {
+        transform: translateY(-10px);
+    }
+    10% {
+        transform: rotate(-10deg);
+    }
+    25% {
+        transform: translateY(-10px);
+    }
+    50%{
+        transform: rotate(8deg);
+    }
+    75% {
+        transform: rotate();
+    }
+}
+
+

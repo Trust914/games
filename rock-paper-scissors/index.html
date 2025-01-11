@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link 
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" 
+        rel="stylesheet"
+    >
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <header>
+        <div class="header">
+            <div>
+                <img src="./images/Rock_header.svg" alt="image of a rock palm">
+                <h1>ROCK</h1>
+            </div>
+            <div>
+                <img src="./images/Paper_header.svg" alt="image of a paper palm">
+                <h1>PAPER</h1>
+            </div>
+            <div>
+                <img src="./images/Scissors_header.svg" alt="image of a scissors palm">
+                <h1>SCISSORS</h1>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="score-board">
+            <div>
+                <h1>Score Board</h1>
+            </div>
+            <div class="score-show">
+                <div>
+                    <h4>HUMAN</h4>
+                    <h1 class="human-score">0</h1>
+                </div>
+                <div>
+                    <h4>COMPUTER</h4>
+                    <h1 class="computer-score">0</h1>
+                </div>
+            </div>
+            
+        </section>
+
+        <section id="main-game">
+            <div>
+                <h4>PLAYER</h4>
+                <div id="player-img-container">
+                    <img id="player-img" src="./images/HUMANrock.svg" alt="human rock hand">
+                </div>
+            </div>
+            <div class="output">
+                <h1 id="result-message">CLICK TO PLAY</h1>
+                <h2 id="winner-message"></h2>
+                <button id="play-btn">PLAY</button>
+            </div>
+            <div>
+                <h4>COMPUTER</h4>
+                <div id="computer-img-container">
+                    <img id="computer-img" src="./images/AIrock.svg" alt="human rock hand">
+                </div>
+            </div>
+        </section>
+        <section id="player-select">
+            <h1>PICK ONE !!</h1>
+            <div class="hands-container">
+                <div data-choice="rock"><img src="./images/HUMANrock.svg" alt=""></div>
+                <div data-choice="paper"><img src="./images/HUMANpaper.svg" alt=""></div>
+                <div data-choice="scissors"><img src="./images/HUMANscissors.svg" alt=""></div>
+            </div>
+        </section>
+        <section class="bottom">
+            <button class="reset-score">RESET GAME</button>
+        </section>
+    </main>
+
+    <script src="./script.js"></script>
+</body>
+</html>
