@@ -1,5 +1,6 @@
 const RPSApp = {};
 
+RPSApp.startGame = false;
 RPSApp.gameChoicesImgs = {
     rock : {
         player : "./images/HUMANrock.svg",
@@ -43,27 +44,27 @@ RPSApp.targetElements = () => {
     RPSApp.playerSelect = document.querySelector("#player-select")
 };
 
-RPSApp.renderPlayerHands = (handsDisplay, playBtnDisplay) => {
-    RPSApp.playerSelect.style.display = handsDisplay;
-    RPSApp.playBtn.style.display = playBtnDisplay;
+RPSApp.renderPlayerHands = (toShow) => {
+    RPSApp.playerSelect.style.display = toShow ? "block" : "none";
+    RPSApp.playBtn.style.display = toShow ? "none" : "block";
 };
 
-RPSApp.getComputerChoice = (obj) =>{
-    const objKeys = Object.keys(obj); // save the keys of the object into an array
+RPSApp.getComputerChoice = () =>{
+    const objKeys = Object.keys(RPSApp.gameChoicesImgs); // save the keys of the object into an array
     const randomIndex = Math.floor(Math.random() * objKeys.length); // get random key from array of keys
     const randomChoice = objKeys[randomIndex];//use the random key to get a random choice from the object of choices
 
     return randomChoice;
 };
 
-RPSApp.getPlayerChoice = () => {
+RPSApp.getChoices = () => {
     return new Promise((resolve) => {// because we need to get result of a clicked hand asynchronously
         RPSApp.playerHandsBtn.forEach(choice => {
             choice.addEventListener("click", (e) => {
                 e.preventDefault();
-                const handChoice = choice.getAttribute("data-choice"); // preset attributes in html ,i.e., rock, paper, scissors
-
-                resolve(handChoice); // export the user choice 
+                const playerChoice = choice.getAttribute("data-choice"); // preset attributes in html ,i.e., rock, paper, scissors
+                const computerChoice = RPSApp.getComputerChoice();
+                resolve({ playerChoice , computerChoice }); // export the player and computer choices
             });
         });
     });
@@ -71,9 +72,7 @@ RPSApp.getPlayerChoice = () => {
 
 RPSApp.getWinner = (playerChoice , computerChoice) => {
     if (playerChoice !== undefined && computerChoice !== undefined){
-        if (playerChoice === computerChoice){
-            return "tie";
-        }
+        if (playerChoice === computerChoice) return "tie";
     
         if(RPSApp.winningRules[playerChoice] === computerChoice){// e.g., if player chooses rock and computer chooses scissors (winningRules[rock] is scissors from declared winning Rules) then player wins
             return "player";
@@ -87,7 +86,7 @@ RPSApp.resultsPlaceHolder = (winner, playerChoice, computerChoice) => {
     const winnerScoreVar = `${winner}Score`; //generate the variable used to render the scores on webpage e.g., RPSApp.playerScore ( see in above targetElements function)
 
     RPSApp.resultsMessage.textContent = RPSApp.winningMessage[winner];
-    if (winner === "player"){
+    if (winner !== "tie"){
         RPSApp.messageWinner.textContent = `${playerChoice.toUpperCase()} BEATS ${computerChoice.toUpperCase()}`;
     }else if(winner === "computer"){
         RPSApp.messageWinner.textContent = `${computerChoice.toUpperCase()} BEATS ${playerChoice.toUpperCase()}`;
@@ -115,9 +114,8 @@ RPSApp.updateScores = (playerChoice , computerChoice) => {
 };
 
 RPSApp.gameOn = async () => { // this function has to be asynchronous because we have to get a promise from the function getPlayerChoice
-    while (true) { //as long as player keeps selecting an option (rock,paper or scissors) run the below functionality
-        const playerChoice = await RPSApp.getPlayerChoice();
-        const computerChoice = RPSApp.getComputerChoice(RPSApp.gameChoicesImgs);
+    while (RPSApp.startGame) { //as long as player keeps selecting an option (rock,paper or scissors) run the below functionality
+        const { playerChoice, computerChoice }= await RPSApp.getChoices();
 
         RPSApp.resultsMessage.textContent = "ROCKING.....";
         RPSApp.playerImg.src = RPSApp.gameChoicesImgs.rock.player; //update the player image with the rock image and render it on the webpage
@@ -133,21 +131,22 @@ RPSApp.gameOn = async () => { // this function has to be asynchronous because we
             RPSApp.computerImgContainer.classList.remove("computer-side"); // remove the CSS class with the computer shake animation
             RPSApp.updateScores(playerChoice, computerChoice);
         }, 1000);
-
     }
 };
 
 RPSApp.playGame = () => {
     RPSApp.playBtn.addEventListener('click', (e) => {
         e.preventDefault();
+        RPSApp.startGame = true;
         RPSApp.resultsMessage.textContent = "";
-        RPSApp.renderPlayerHands("block", "none"); //show the hands option for player to select from and hide the play button
+        RPSApp.renderPlayerHands(true); //show the hands option for player to select from and hide the play button
+        RPSApp.gameOn(); 
     });
-    RPSApp.gameOn(); 
 }
 
 RPSApp.resetGame = () => {
-    RPSApp.renderPlayerHands("none", "block"); //hide the hands option for player to select from and show the play button
+    RPSApp.startGame = false;
+    RPSApp.renderPlayerHands(false); //hide the hands option for player to select from and show the play button
     RPSApp.updateScores(); // basically, reset the scores
 };
 
@@ -166,7 +165,7 @@ RPSApp.init = () => {
 };
 
 if (document.readyState === 'loading'){//initialise and run the application
-    document.addEventListener('DOMContentLoaded', RPSApp.init);
+    document.addEventListener('DOMContentLoaded', RPSApp.init());
 }else {
     RPSApp.init();
 }
