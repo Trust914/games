@@ -32,6 +32,7 @@ body {
     display: flex;
     gap: 150px;
 }
+
 #main-game {
     display: flex;
     gap: 50px;
@@ -72,6 +73,9 @@ body {
 
 .hands-container div:hover {
     background-color: aquamarine;
+    cursor: pointer;
+}
+.final-results i {
     cursor: pointer;
 }
 @keyframes humanShake {
