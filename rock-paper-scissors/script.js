@@ -1,6 +1,7 @@
 const RPSApp = {};
 
 RPSApp.startGame = false;
+RPSApp.maxGamePlay = 3;
 RPSApp.gameChoicesImgs = {
     rock : {
         player : "./images/HUMANrock.svg",
@@ -30,6 +31,7 @@ RPSApp.scores = {
 };
 
 RPSApp.targetElements = () => {
+    RPSApp.mainPage = document.querySelector("main")
     RPSApp.playerScore = document.querySelector(".human-score");
     RPSApp.computerScore = document.querySelector(".computer-score");
     RPSApp.resultsMessage = document.querySelector("#result-message");
@@ -41,8 +43,17 @@ RPSApp.targetElements = () => {
     RPSApp.computerImg = document.querySelector("#computer-img");
     RPSApp.playerHandsBtn = document.querySelectorAll(".hands-container>div");
     RPSApp.resetBtn = document.querySelector(".reset-score");
-    RPSApp.playerSelect = document.querySelector("#player-select")
+    RPSApp.playerSelect = document.querySelector("#player-select");
+    RPSApp.ScoreStars = {
+        player : document.querySelectorAll(".human-score i"),
+        computer : document.querySelectorAll(".computer-score i")
+    };
+    RPSApp.finalResultsContainer = document.querySelector("article");
+    RPSApp.finalResultsCard = document.querySelector(".final-results");
+    RPSApp.finalResultsText = document.querySelector(".final-results h1");
+    RPSApp.finalResultsCloseBtn = document.querySelector(".final-results i");
 };
+
 
 RPSApp.renderPlayerHands = (toShow) => {
     RPSApp.playerSelect.style.display = toShow ? "block" : "none";
@@ -60,58 +71,86 @@ RPSApp.getComputerChoice = () =>{
 RPSApp.getChoices = () => {
     return new Promise((resolve) => {// because we need to get result of a clicked hand asynchronously
         RPSApp.playerHandsBtn.forEach(choice => {
-            choice.addEventListener("click", (e) => {
+            choice.onclick = (e) => {
                 e.preventDefault();
                 const playerChoice = choice.getAttribute("data-choice"); // preset attributes in html ,i.e., rock, paper, scissors
                 const computerChoice = RPSApp.getComputerChoice();
                 resolve({ playerChoice , computerChoice }); // export the player and computer choices
-            });
+            };
         });
     });
 };
 
 RPSApp.getWinner = (playerChoice , computerChoice) => {
-    if (playerChoice !== undefined && computerChoice !== undefined){
-        if (playerChoice === computerChoice) return "tie";
-    
-        if(RPSApp.winningRules[playerChoice] === computerChoice){// e.g., if player chooses rock and computer chooses scissors (winningRules[rock] is scissors from declared winning Rules) then player wins
-            return "player";
-        }else {
-            return "computer"
-        }
+    if (playerChoice === computerChoice) return "tie";
+
+    if(RPSApp.winningRules[playerChoice] === computerChoice){// e.g., if player chooses rock and computer chooses scissors (winningRules[rock] is scissors from declared winning Rules) then player wins
+        return "player";
+    }else {
+        return "computer"
     }
 };
 
-RPSApp.resultsPlaceHolder = (winner, playerChoice, computerChoice) => {
-    const winnerScoreVar = `${winner}Score`; //generate the variable used to render the scores on webpage e.g., RPSApp.playerScore ( see in above targetElements function)
+RPSApp.updateWinnerStar = (winner,index,revert) => { 
+    if (!revert){
+        RPSApp.ScoreStars[winner][index-1].classList.replace('bx-star', 'bxs-star');
+    }else {
+        RPSApp.ScoreStars[winner][index].classList.replace('bxs-star', 'bx-star');
+    }
 
+};
+
+RPSApp.resultsPlaceHolder = (winner, playerChoice, computerChoice) => {
     RPSApp.resultsMessage.textContent = RPSApp.winningMessage[winner];
-    if (winner !== "tie"){
-        RPSApp.messageWinner.textContent = `${playerChoice.toUpperCase()} BEATS ${computerChoice.toUpperCase()}`;
+    if (winner === "player"){
+        RPSApp.messageWinner.textContent = `${playerChoice} beats ${computerChoice}`.toUpperCase();
     }else if(winner === "computer"){
-        RPSApp.messageWinner.textContent = `${computerChoice.toUpperCase()} BEATS ${playerChoice.toUpperCase()}`;
+        RPSApp.messageWinner.textContent = `${computerChoice} beats ${playerChoice}`.toUpperCase();
     }
     RPSApp.scores[winner] +=1 ;
-    RPSApp[winnerScoreVar].textContent = `${RPSApp.scores[winner]}`;
-
+    RPSApp.updateWinnerStar(winner, RPSApp.scores[winner],false);
 };
 
 RPSApp.updateScores = (playerChoice , computerChoice) => {
     const currentPlayWinner = RPSApp.getWinner(playerChoice , computerChoice);
-
     if (currentPlayWinner === "player" || currentPlayWinner === "computer" ){
         RPSApp.resultsPlaceHolder(currentPlayWinner, playerChoice, computerChoice);
     }else if (currentPlayWinner === "tie"){
         RPSApp.resultsMessage.textContent = "DRAW!!";
-    }else{// reset button is clicked, hence, playerchoice and computerchoice are not defined, then reset scores
-        RPSApp.resultsMessage.textContent = "CLICK TO PLAY";
-        RPSApp.messageWinner.textContent = "";
-        RPSApp.scores.computer = 0;
-        RPSApp.computerScore.textContent = `${RPSApp.scores.computer}`;
-        RPSApp.scores.player = 0;
-        RPSApp.playerScore.textContent = `${RPSApp.scores.player}`;
     }
 };
+
+RPSApp.resetValues = () => {
+    RPSApp.resultsMessage.textContent = "CLICK TO PLAY";
+    RPSApp.messageWinner.textContent = "";
+    RPSApp.computerImg.src = RPSApp.gameChoicesImgs.rock.computer; //update the computer image rockimage and render it on the webpage
+    RPSApp.playerImg.src = RPSApp.gameChoicesImgs.rock.player; //update the player image with the rock image and render it on the webpage
+    RPSApp.scores.computer = 0;
+    RPSApp.scores.player = 0;
+    for (let i = 0; i < RPSApp.maxGamePlay; i++){
+        RPSApp.updateWinnerStar("player",i,true);
+        RPSApp.updateWinnerStar("computer",i,true);
+    }
+};
+
+RPSApp.showFinalResultsCard = (finalWinner) => {
+    RPSApp.mainPage.style.filter = "blur(10px)";
+    RPSApp.mainPage.style.pointerEvents = "none";
+    RPSApp.finalResultsContainer.style.visibility = "visible";
+
+    if (finalWinner == "player"){
+        RPSApp.finalResultsText.textContent = RPSApp.winningMessage[finalWinner];
+    }else {
+        RPSApp.finalResultsText.textContent = RPSApp.winningMessage.computer;
+    }
+}
+
+RPSApp.closeFinalResultsCard = () => {
+    RPSApp.mainPage.style.filter = "blur(0)";
+    RPSApp.mainPage.style.pointerEvents = "auto";
+    RPSApp.finalResultsContainer.style.visibility = "hidden";
+    RPSApp.resetGame();
+}
 
 RPSApp.gameOn = async () => { // this function has to be asynchronous because we have to get a promise from the function getPlayerChoice
     while (RPSApp.startGame) { //as long as player keeps selecting an option (rock,paper or scissors) run the below functionality
@@ -130,11 +169,22 @@ RPSApp.gameOn = async () => { // this function has to be asynchronous because we
             RPSApp.computerImg.src = RPSApp.gameChoicesImgs[computerChoice].computer; //update the computer selection(rock,paper or scissors) with the proper image and render it on the webpage
             RPSApp.computerImgContainer.classList.remove("computer-side"); // remove the CSS class with the computer shake animation
             RPSApp.updateScores(playerChoice, computerChoice);
+
+            if (RPSApp.scores.player === RPSApp.maxGamePlay || RPSApp.scores.computer === RPSApp.maxGamePlay) {
+                RPSApp.showFinalResultsCard();
+                RPSApp.startGame = false;
+            }
         }, 1000);
     }
 };
 
-RPSApp.playGame = () => {
+RPSApp.resetGame = () => {
+    RPSApp.startGame = false;
+    RPSApp.renderPlayerHands(false); //hide the hands option for player to select from and show the play button
+    RPSApp.resetValues();
+};
+
+RPSApp.runGame = () => {
     RPSApp.playBtn.addEventListener('click', (e) => {
         e.preventDefault();
         RPSApp.startGame = true;
@@ -142,30 +192,26 @@ RPSApp.playGame = () => {
         RPSApp.renderPlayerHands(true); //show the hands option for player to select from and hide the play button
         RPSApp.gameOn(); 
     });
-}
-
-RPSApp.resetGame = () => {
-    RPSApp.startGame = false;
-    RPSApp.renderPlayerHands(false); //hide the hands option for player to select from and show the play button
-    RPSApp.updateScores(); // basically, reset the scores
-};
-
-RPSApp.runGame = () => {
-    RPSApp.playGame();
 
     RPSApp.resetBtn.addEventListener('click', (e) => {
         e.preventDefault();
         RPSApp.resetGame();
     });
+
+    RPSApp.finalResultsCloseBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        RPSApp.closeFinalResultsCard();
+    })
 };
 
 RPSApp.init = () => {
     RPSApp.targetElements(); //initialise the document objects to interact with
+    RPSApp.resetGame();
     RPSApp.runGame();
 };
 
 if (document.readyState === 'loading'){//initialise and run the application
-    document.addEventListener('DOMContentLoaded', RPSApp.init());
+    document.addEventListener('DOMContentLoaded', RPSApp.init);
 }else {
     RPSApp.init();
 }
