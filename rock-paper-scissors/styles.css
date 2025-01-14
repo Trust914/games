@@ -42,7 +42,7 @@ body {
     width: 100px;
 }
 
-.player-side {
+.human-side {
     transform-origin: left; 
     animation: humanShake 0.3s ease-in-out infinite;
 }
@@ -52,7 +52,7 @@ body {
     animation: computerShake 0.3s ease-in-out infinite; 
 }
 
-#player-select{
+#human-select{
    display: none;
    /* justify-content: center;
    padding-top: 20px; */
