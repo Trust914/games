@@ -23,24 +23,48 @@ body {
     border-radius: 50%;
 }
 
-#score-board {
+/* #score-board {
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-.score-show{
+} */
+/* .score-show{
     display: flex;
     gap: 150px;
-}
+} */
 
-#main-game {
+/* #main-game {
     display: flex;
     gap: 50px;
     justify-content: center;
+} */
+#main-game {
+    position: relative;
 }
-#main-game img{
+
+.human-hand, .computer-hand {
+    flex: 1; /* Ensure both hands take equal width */
+}
+
+.play-btn-container {
+    flex: 1; /* Prevent the button container from affecting layout */
+    text-align: center;
+    min-width: 200px; /* Prevent collapse when button is hidden */
+}
+.human-hand .btn{
+    border: none;
+}
+.disabled{
+    border: none;
+}
+#play-btn {
+    display: inline-block;
+    --bs-btn-padding-x: 5rem;
+}
+
+/* #main-game img{
     width: 100px;
-}
+} */
 
 .human-side {
     transform-origin: left; 
@@ -78,6 +102,9 @@ body {
 .final-results i {
     cursor: pointer;
 }
+.modal-dialog{
+    visibility: hidden;
+}
 @keyframes humanShake {
     0% {
         transform: translateY(10px);
@@ -113,5 +140,3 @@ body {
         transform: rotate();
     }
 }
-
-

@@ -11,105 +11,121 @@
         rel="stylesheet"
     >
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles.css">
 </head>
-<body>
-    <header>
-        <div class="header">
-            <div>
-                <img src="./images/Rock_header.svg" alt="image of a rock palm">
-                <h1>ROCK</h1>
+<body >
+    <header class="container py-3 border-bottom">
+        <div class="row justify-content-center text-center">
+            <div class="col-4">
+                <img src="./images/Rock_header.svg" alt="Rock" class="img-fluid" width="50">
+                <p class="fw-bold">ROCK</p>
             </div>
-            <div>
-                <img src="./images/Paper_header.svg" alt="image of a paper palm">
-                <h1>PAPER</h1>
+            <div class="col-4">
+                <img src="./images/Paper_header.svg" alt="Paper" class="img-fluid" width="50">
+                <p class="fw-bold">PAPER</p>
             </div>
-            <div>
-                <img src="./images/Scissors_header.svg" alt="image of a scissors palm">
-                <h1>SCISSORS</h1>
+            <div class="col-4">
+                <img src="./images/Scissors_header.svg" alt="Scissors" class="img-fluid" width="50">
+                <p class="fw-bold">SCISSORS</p>
             </div>
         </div>
     </header>
 
-    <main>
-        <section id="score-board">
-            <div>
-                <h1>Score Board</h1>
-            </div>
-            <div class="score-show">
-                <div>
-                    <h4>HUMAN</h4>
+    <main class="container pt-5">
+        <section id="score-board" class="bg-white rounded-3 shadow p-4 mb-4">
+            <h1 class="text-center mb-4 fw-bold">Score Board</h1>
+            <div class="row pb-3 pt-lg-4 mx-auto p-2 align-items-center rounded-3 border shadow-lg">
+                <div class="col text-center ">
+                    <h4 class="fw-bold">YOU</h4>
                     <div class="human-score">
-                        <i class='bx bx-star'></i>
-                        <i class='bx bx-star'></i>
-                        <i class='bx bx-star'></i>
+                        <i class='bx bx-star fs-5'></i>
+                        <i class='bx bx-star fs-5'></i>
+                        <i class='bx bx-star fs-5'></i>
                     </div>
                 </div>
-                <div>
-                    <h4>COMPUTER</h4>
+                <div class="col text-center">
+                    <h4 class="fw-bold">COMPUTER</h4>
                     <div class="computer-score">
-                        <i class='bx bx-star'></i>
-                        <i class='bx bx-star'></i>
-                        <i class='bx bx-star'></i>
+                        <i class='bx bx-star fs-5'></i>
+                        <i class='bx bx-star fs-5'></i>
+                        <i class='bx bx-star fs-5'></i>
                     </div>
                 </div>
             </div>
-            <div id="round-selection">
-                <label for="max-rounds">Change number of rounds :</label>
-                <select id="max-rounds" name="max-rounds">
-                    <option value="Choose">Choose</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                </select>
+            <div id="round-selection" class="row mt-3">
+                <div class="col text-center">
+                    <label for="max-rounds" class="form-label fw-bold">Change number of rounds :</label>
+                    <select id="max-rounds" name="max-rounds" class="form-select d-inline w-auto" data-bs-theme="light">
+                        <option class="dropdown-item rounded-2" value="1">1</option>
+                        <option class="dropdown-item rounded-2" value="3" selected>3</option>
+                        <option class="dropdown-item rounded-2" value="5">5</option>
+                        <option class="dropdown-item rounded-2" value="7">7</option>
+                    </select> 
+                </div>  
             </div>
         </section>
 
-        <section id="main-game">
-            <div>
-                <h4>HUMAN</h4>
-                <div id="human-img-container">
-                    <img id="human-img" src="./images/HUMANrock.svg" alt="human rock hand">
+        <section id="main-game" class="d-flex justify-content-between align-items-center text-center mb-4">
+            <div class="human-hand">
+                <h4 class="fw-bold">YOU</h4>
+                <div id="human-img-container" class="btn disabled">
+                    <img id="human-img" data-choice="rock" class="img-fluid" src="./images/HUMANrock.svg" alt="human rock hand" width="150">
                 </div>
             </div>
-            <div class="output">
-                <h1 id="result-message">CLICK TO PLAY</h1>
+            <div class="play-btn-container">
+                <h1 id="result-message" class="fw-bold">CLICK TO PLAY</h1>
                 <h2 id="winner-message"></h2>
-                <button id="play-btn">PLAY</button>
+                <button id="play-btn" class="btn btn-outline-secondary btn-lg"> START GAME</button>
             </div>
-            <div>
-                <h4>COMPUTER</h4>
+            <div class="computer-hand">
+                <h4 class="fw-bold">COMPUTER</h4>
                 <div id="computer-img-container">
-                    <img id="computer-img" src="./images/AIrock.svg" alt="human rock hand">
+                    <img id="computer-img" class="img-fluid" src="./images/AIrock.svg" alt="computer rock hand" width="150">
                 </div>
             </div>
         </section>
-        <section id="human-select">
+        <!-- <section id="human-select">
             <h1>PICK ONE !!</h1>
             <div class="hands-container">
                 <div data-choice="rock"><img src="./images/HUMANrock.svg" alt=""></div>
                 <div data-choice="paper"><img src="./images/HUMANpaper.svg" alt=""></div>
                 <div data-choice="scissors"><img src="./images/HUMANscissors.svg" alt=""></div>
             </div>
-        </section>
+        </section> -->
         <section class="bottom">
             <button class="reset-score">RESET GAME</button>
         </section>
     </main>
 
-    <article style="visibility: hidden;">
+    
+    <!-- <div id="final-results-card"  class="modal-dialog modal-dialog-centered">
         <div class="final-results">
-            <i class='bx bx-x'></i>
+            <button type="button" class="btn-close" aria-label="Close"></button>
             <h2>Congratulations </h2>
             <h3>WINNER!</h3>
             <button id="play-again">PLAY AGAIN</button>
         </div>
-    </article>
+    </div> -->
+    <div class="modal modal-sheet position-static d-block p-4 py-md-5" tabindex="-1" role="dialog" id="modalSheet">
+        <div id="final-results-card" class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content rounded-4 shadow">
+              <div class="modal-header border-bottom-0 text-center">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="final-winner-message modal-body py-0 text-center">
+                <h2>Congratulations </h2>
+                <h3>WINNER!</h3>
+              </div>
+              <div class="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
+                <button id="play-again" type="button" class="btn btn-outline-secondary ">Play Again</button>
+              </div>
+            </div>
+        </div>
+    </div>
+    
 
     <script src="./script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
