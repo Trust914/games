@@ -43,13 +43,13 @@ body {
 }
 
 .human-hand, .computer-hand {
-    flex: 1; /* Ensure both hands take equal width */
+    flex: 1; 
 }
 
 .play-btn-container {
-    flex: 1; /* Prevent the button container from affecting layout */
+    flex: 1; 
     text-align: center;
-    min-width: 200px; /* Prevent collapse when button is hidden */
+    min-width: 200px; 
 }
 .human-hand .btn{
     border: none;
@@ -139,4 +139,17 @@ body {
     75% {
         transform: rotate();
     }
+}
+body {
+    background-color: #F8F9FA;
+    font-family: 'Poppins', sans-serif;
+    color: #343A40;
+}
+
+header p {
+    margin: 0;
+}
+
+header img {
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
 }
