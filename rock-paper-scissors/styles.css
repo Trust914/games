@@ -10,18 +10,18 @@ body {
     /* border: 1px solid red; */
 }
 
-.header {
+/* .header {
     display: flex;
     gap: 1px;
-}
-.header>div{
+} */
+/* .header>div{
     display: flex;
     font-size: 10px;
-}
-.header img {
+} */
+/* .header img {
     width: 60px;
     border-radius: 50%;
-}
+} */
 
 /* #score-board {
     display: flex;
@@ -102,8 +102,23 @@ body {
 .final-results i {
     cursor: pointer;
 }
-.modal-dialog{
+.modal-dialog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1050;
     visibility: hidden;
+}
+
+.modal-content {
+    max-width: 500px; /* Constrain modal width for large screens */
+    width: 90%; /* Responsive width for smaller screens */
+    margin: auto;
+    border-radius: 10px; /* Smooth rounded corners */
 }
 @keyframes humanShake {
     0% {

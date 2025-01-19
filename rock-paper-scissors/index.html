@@ -16,28 +16,28 @@
 </head>
 <body>
     <header class="container py-3 border-bottom">
-        <div class="row justify-content-center text-center g-2">
+        <div class="row justify-content-center text-center g-3">
             <div class="col-4 col-md-3 col-lg-2">
                 <img src="./images/Rock_header.svg" alt="Rock" class="img-fluid" width="50">
-                <p class="fw-bold">ROCK</p>
+                <p class="fw-bold fs-5">ROCK</p>
             </div>
             <div class="col-4 col-md-3 col-lg-2">
                 <img src="./images/Paper_header.svg" alt="Paper" class="img-fluid" width="50">
-                <p class="fw-bold">PAPER</p>
+                <p class="fw-bold fs-5">PAPER</p>
             </div>
             <div class="col-4 col-md-3 col-lg-2">
                 <img src="./images/Scissors_header.svg" alt="Scissors" class="img-fluid" width="50">
-                <p class="fw-bold">SCISSORS</p>
+                <p class="fw-bold fs-5">SCISSORS</p>
             </div>
         </div>
     </header>
 
     <main class="container pt-5">
         <section id="score-board" class="bg-white rounded-3 shadow p-4 mb-4">
-            <h1 class="text-center mb-4 fw-bold">Score Board</h1>
+            <h1 class="text-center mb-4 fw-bold fs-4 fs-md-3">Score Board</h1>
             <div class="row g-3 pb-3 pt-lg-4 mx-auto align-items-center rounded-3 border shadow-lg">
                 <div class="col-6 text-center">
-                    <h4 class="fw-bold">YOU</h4>
+                    <h4 class="fw-bold fs-5">YOU</h4>
                     <div class="human-score d-flex justify-content-center">
                         <i class='bx bx-star fs-5'></i>
                         <i class='bx bx-star fs-5'></i>
@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="col-6 text-center">
-                    <h4 class="fw-bold">COMPUTER</h4>
+                    <h4 class="fw-bold fs-5">COMPUTER</h4>
                     <div class="computer-score d-flex justify-content-center">
                         <i class='bx bx-star fs-5'></i>
                         <i class='bx bx-star fs-5'></i>
@@ -55,8 +55,8 @@
             </div>
             <div id="round-selection" class="row mt-3">
                 <div class="col text-center">
-                    <label for="max-rounds" class="form-label fw-bold">Change number of rounds :</label>
-                    <select id="max-rounds" name="max-rounds" class="form-select d-inline w-auto" data-bs-theme="light">
+                    <label for="max-rounds" class="form-label fw-bold">Change number of rounds:</label>
+                    <select id="max-rounds" name="max-rounds" class="form-select d-inline w-auto">
                         <option value="1">1</option>
                         <option value="3" selected>3</option>
                         <option value="5">5</option>
@@ -66,20 +66,20 @@
             </div>
         </section>
 
-        <section id="main-game" class="d-flex flex-column flex-lg-row justify-content-between align-items-center text-center mb-1">
-            <div class="human-hand mb-4 mb-lg-0">
-                <h4 class="fw-bold">YOU</h4>
+        <section id="main-game" class="d-flex flex-column flex-lg-row justify-content-between align-items-center text-center mb-4">
+            <div class="human-hand mb-4 mb-lg-0 text-center">
+                <h5 class="fw-bold fs-5">YOU</h5>
                 <div id="human-img-container" class="btn disabled">
                     <img id="human-img" data-choice="rock" class="img-fluid" src="./images/HUMANrock.svg" alt="human rock hand" width="150">
                 </div>
             </div>
-            <div class="play-btn-container mb-4 mb-lg-0">
-                <h1 id="result-message" class="fw-bold">CLICK TO PLAY</h1>
-                <h2 id="winner-message"></h2>
-                <button id="play-btn" class="btn btn-outline-secondary btn-lg"> START GAME</button>
+            <div class="play-btn-container mb-4 mb-lg-0 text-center">
+                <h3 id="result-message" class="fw-bold fs-4">CLICK TO PLAY</h3>
+                <h5 id="winner-message" class="fs-5"></h5>
+                <button id="play-btn" class="btn btn-outline-secondary d-inline-flex align-items-center">START GAME</button>
             </div>
-            <div class="computer-hand">
-                <h4 class="fw-bold">COMPUTER</h4>
+            <div class="computer-hand text-center">
+                <h5 class="fw-bold fs-5">COMPUTER</h5>
                 <div id="computer-img-container">
                     <img id="computer-img" class="img-fluid" src="./images/AIrock.svg" alt="computer rock hand" width="150">
                 </div>
@@ -91,19 +91,19 @@
         </section>
     </main>
 
-    <div class="modal modal-sheet position-static d-block p-4 py-md-5" tabindex="-1" role="dialog" id="modalSheet">
+    <div class="modal modal-sheet position-static d-block" tabindex="-1" role="dialog" id="modalSheet">
         <div id="final-results-card" class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content rounded-4 shadow">
-              <div class="modal-header border-bottom-0 text-center">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="final-winner-message modal-body py-0 text-center">
-                <h2>Congratulations </h2>
-                <h3>WINNER!</h3>
-              </div>
-              <div class="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
-                <button id="play-again" type="button" class="btn btn-outline-secondary ">Play Again</button>
-              </div>
+                <div class="modal-header border-bottom-0 text-center">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="final-winner-message modal-body py-0 text-center">
+                    <h2 class="fs-3">Congratulations</h2>
+                    <h3 class="fs-4">WINNER!</h3>
+                </div>
+                <div class="modal-footer flex-column align-items-stretch w-100 gap-2 pb-3 border-top-0">
+                    <button id="play-again" type="button" class="btn btn-outline-secondary">Play Again</button>
+                </div>
             </div>
         </div>
     </div>

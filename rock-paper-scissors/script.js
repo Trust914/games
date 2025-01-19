@@ -50,12 +50,10 @@ RPSApp.targetElements = () => {
     RPSApp.winnerMessage = document.querySelector("#winner-message");
     RPSApp.playBtn = document.querySelector("#play-btn");
     RPSApp.resetBtn = document.querySelector(".reset-score");
-    RPSApp.humanHandsBtn = document.querySelectorAll(".hands-container>div");
     RPSApp.humanImgContainer = document.querySelector("#human-img-container");
     RPSApp.humanImg = document.querySelector("#human-img");
     RPSApp.computerImgContainer = document.querySelector("#computer-img-container");
     RPSApp.computerImg = document.querySelector("#computer-img");
-    RPSApp.humanSelect = document.querySelector("#human-select");
     RPSApp.scoreStars = {
         human : {
             container : document.querySelector(".human-score"),
@@ -68,9 +66,8 @@ RPSApp.targetElements = () => {
     };
     RPSApp.finalResults = {
         container : document.querySelector(".modal-dialog"),
-        innerCard : document.querySelector(".final-results"),
         message : document.querySelector(".final-winner-message h2"),
-        winStatus : document.querySelector(".final-results h3"),
+        winStatus : document.querySelector(".final-winner-message h3"),
         closeBtn : document.querySelector(".btn-close"),
         playAgainBtn : document.querySelector("#play-again"),
     };
@@ -90,13 +87,9 @@ RPSApp.updateScoreStars = () => {
     RPSApp.scoreStars.computer.stars = RPSApp.scoreStars.computer.container.querySelectorAll("i");
 };
 
-RPSApp.updateMaxRounds = () => {
-    RPSApp.selectedNumRounds =  parseInt(RPSApp.playerMaxGameRound.value);
-};
+RPSApp.updateMaxRounds = () => RPSApp.selectedNumRounds =  parseInt(RPSApp.playerMaxGameRound.value);
 
-RPSApp.toggleDisplay = (toShow) => {
-    RPSApp.roundSelectionContainer.style.visibility = toShow ? "hidden" : "visible";
-};
+RPSApp.toggleDisplay = (toShow) => RPSApp.roundSelectionContainer.style.visibility = toShow ? "hidden" : "visible";
 
 RPSApp.getComputerChoice = () =>{
     const choices = Object.keys(RPSApp.gameChoicesImgs); // save the keys of the gameChoiceImgs object into an array
@@ -107,7 +100,7 @@ RPSApp.getComputerChoice = () =>{
 
 RPSApp.getHumanChoice = () => {
     const choiceList = Object.keys(RPSApp.gameChoicesImgs);
-    const currentChoice = RPSApp.humanImg.getAttribute("data-choice");
+    const currentChoice = RPSApp.humanImg.getAttribute("data-choice");  
     if (!RPSApp.humanClicked){
         RPSApp.humanChoice = currentChoice;
     }else{
@@ -121,7 +114,6 @@ RPSApp.getHumanChoice = () => {
         RPSApp.humanImg.setAttribute("data-choice", nextChoice);
         RPSApp.humanChoice = nextChoice;
     }
-    
 };
 
 RPSApp.setAnimation = (isRocking , humanChoice = null , computerChoice = null) => {
@@ -175,7 +167,7 @@ RPSApp.getFinalRoundWinner = (numRounds) => {
     if (RPSApp.scores.human === numRounds){
         return "human";
     }
-    return "computer"
+    return "computer";
 };
 
 RPSApp.showFinalResultsCard = (finalWinner) => {
@@ -206,7 +198,7 @@ RPSApp.resetValues = () => {
 
 RPSApp.resetGame = () => {
     RPSApp.startGame = false;
-    RPSApp.playBtn.textContent = "START NEW GAME";
+    RPSApp.playBtn.textContent = "START GAME";
     RPSApp.humanImgContainer.classList.add("disabled");
     RPSApp.toggleDisplay(false); //hide the hands option for human to select from and show the play button
     RPSApp.resetValues();
@@ -220,7 +212,7 @@ RPSApp.startNewGame = () => {
     RPSApp.toggleDisplay(true); //show the hands option for human to select from and hide the play button and round selection
 };
 
-RPSApp.handleUserChoice = () =>{ //when a player selects a hand, the game is called
+RPSApp.handleUserChoice = () =>{
     if (!RPSApp.startGame) return;
     const computerChoice = RPSApp.getComputerChoice();
     RPSApp.resultsMessage.textContent = "ROCKING.....";
